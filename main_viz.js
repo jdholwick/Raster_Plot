@@ -12,7 +12,7 @@
 
     d3.queue()
         .defer(d3.json, "data/world.topojson") // first item here so second in 'function ready()'
-        .defer(d3.csv, "data/capitals.csv") // second item here so third in 'function ready()'
+        .defer(d3.csv, "data/city-data.csv") // second item here so third in 'function ready()'
         .await(ready)
 
     // whenever there are shapes on a map we want to use 'geoMercator' and 'geoPath' apparently
