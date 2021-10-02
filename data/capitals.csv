@@ -9,4 +9,5 @@ population,country,name,lat,long,countrycode,continent
 1,Nepal,Kathmandu,27.716666666666665,85.316667,NP,Asia
 0.5,Portugal,Lisbon,38.71666666666667,-9.133333,PT,Europe
 0.65,United States,Washington DC,38.883333,-77.000000,US,Central America
+0.65,United States,"Missoula, MT",46.8721,-113.9940,US,Central America
 1.3,Uruguay,Montevideo,-34.85,-56.166667,UY,South America
