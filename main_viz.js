@@ -1,7 +1,7 @@
 (function() {
-    var margin = { top: 50, left: 50, right: 50, bottom: 50},
-        height = 400 - margin.top - margin.bottom,
-        width = 800 - margin.left - margin.right;
+    var margin = { top: 75, left: 75, right: 75, bottom: 75},
+        height = 800 - margin.top - margin.bottom,
+        width = 1200 - margin.left - margin.right;
 
     var svg = d3.select("#map")
         .append("svg")
@@ -11,24 +11,86 @@
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     d3.queue()
-        .defer(d3.json, "data/world.topojson")
+        .defer(d3.json, "data/world.topojson") // first item here so second in 'function ready()'
+        .defer(d3.csv, "data/capitals.csv") // second item here so third in 'function ready()'
         .await(ready)
 
+    // whenever there are shapes on a map we want to use 'geoMercator' and 'geoPath' apparently
+    var projection = d3.geoMercator()
+        .translate([width/2, height/2])
+        .scale(195) // essentially creates the level of zoom on our map we'll see
+
+    var map_path = d3.geoPath()
+        .projection(projection)
     // probably won't need the following function
     /*d3.csv("data/raster-data.csv", function(data) {
         console.log(data);
     });*/
 
-    function ready (error, data) {
+    function ready (error, data, capitals) {
         console.log(data)
 
         var countries = topojson.feature(data, data.objects.countries).features
 
-        console.log(countries) // just to confirm that i'm pulling country data
 
         svg.selectAll(".country")
             .data(countries)
             .enter().append("path")
             .attr("class", "country")
+            .attr("d", map_path) // grabs the 'map_path' variable i made and filled with 'geoPath' and then displays our map in the browser
+            .on('mouseover', function(d) {
+                d3.select(this).attr("fill", "#000000") // was previously #D23513, a brighter red than the dark, to highlight a country
+            })
+            .on('mouseout', function(d) {
+                d3.select(this).attr("fill", "#B07572")
+            })
+            .attr("fill", "#B07572") // fill was previously #8F240D -- going lighter for now
+            .attr("stroke", "#000000")
+            .attr("stroke-width", "0.9")
+
+        svg.selectAll(".capital-marks")
+            .data(capitals)
+            .enter().append("circle")
+            .attr("r", 4)
+            .attr("fill", "white")
+
+            // the lat and long must be converted to x and y coordinates (as was discussed in lecture -- turns out this is true)
+            .attr("cx", function(d) {
+                // notice we must feed in both 'long' and 'lat' to get 'x' coord
+                var coords = projection([d.long, d.lat]) // 'long' and 'lat' are the columns from our 'capitals.csv' file
+                return coords[0]; // returns 'x' only
+            })
+            .attr("cy", function(d) {
+                var coords = projection([d.long, d.lat]) // 'long' and 'lat' are the columns from our 'capitals.csv' file
+                return coords[1]; // returns 'y' only
+            })
+
+        svg.selectAll(".capital-name")
+            .data(capitals)
+            .enter().append("text")
+            .attr("class", "capital-name")
+
+            // the lat and long must be converted to x and y coordinates (as was discussed in lecture -- turns out this is true)
+            .attr("x", function(d) {
+                // notice we must feed in both 'long' and 'lat' to get 'x' coord
+                var coords = projection([d.long, d.lat]) // 'long' and 'lat' are the columns from our 'capitals.csv' file
+                return coords[0]; // returns 'x' only
+            })
+            .attr("y", function(d) {
+                var coords = projection([d.long, d.lat]) // 'long' and 'lat' are the columns from our 'capitals.csv' file
+                return coords[1]; // returns 'y' only
+            })
+            .attr("fill", "#000000")
+            .attr("stroke", "#000000")
+            .attr("stroke-width", ".5")
+
+            .text(function(d) {
+                return d.name
+            })
+            .attr("dx", 10) // offset on 'x'
+            .attr("dy", 3) // offset on 'y'
+
+        console.log(capitals) // just to confirm that i'm pulling a certain bit of data
+
     }
 })();
