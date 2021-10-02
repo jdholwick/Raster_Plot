@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Raster Plot Work</title>
+
+    <script type="text/javascript" src="http://d3js.org/d3.v5.min.js"></script>
+
+</head>
+<body>
+
+<p id="p1">First bit of text</p>
+<p id="p2">Second bit of text</p>
+
+<svg width="100" height="100">
+    //playing with drawing simple shapes
+    <circle cx="50" cy="50" r="48" fill="red"/>
+</svg>
+
+<script type="text/javascript">
+
+    (function() {
+        var margin = { top: 50, left: 50, right: 50, bottom: 50},
+            height = 400 - margin.top - margin.bottom,
+            width = 800 - margin.left - margin.right;
+        var svg = d3.select("#map")
+            .append("svg")
+            .attr("height", height + margin.top + margin.bottom)
+            .attr("width", width + margin.left + margin.right)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        d3.queue()
+            .defer(d3.json, "data/world.topojson")
+            .await(ready)
+
+        // probably won't need the following function
+        d3.csv("data/raster-data.csv", function(data) {
+            console.log(data);
+        });
+
+        function ready (error, data){
+            console.log(data)
+            var countries = topojson.feature(data, data.objects.countries)
+        }
+    })
+    //ogr2ogr -where "FID in ('PT','ES','AD','FR','CH','IT','AT','DE','HU','LI','BE','LU','SI','HR','SK','BA','CZ', 'DZ','MA','TN','LY')" countries.geojson data/CNTR_RG_10M_2016_4326.geojson
+
+    d3.json("data/world.topojson", function(data) {
+        console.log(data);
+    });
+
+    if(3<5){
+        d3.select("#p2").style("color", "blue");
+        //console.log("Testing...");
+
+    }
+
+
+</script>
+</body>
+</html>
