@@ -4,8 +4,18 @@
     <meta charset="utf-8">
     <title>Raster Plot Work</title>
 
-    <!-- This is the version of D3 I will be using because I know my code works with it. -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.min.js"></script>
+    <style>
+        * {
+            font-family: "Courier";
+        }
+        p {
+            font-size: 0.85em;
+        }
+        svg {
+            background: #efefef;
+        }
+
+        </style>
 
 </head>
 <body>
@@ -13,12 +23,23 @@
 <p id="p1">Slowly we are learning D3</p>
 <p id="p2">Following you will slowly see this come together:</p>
 
-<svg width="100" height="100">
+<div id="map"></div>
+
+<!--<svg width="100" height="100">
     <circle cx="50" cy="50" r="48" fill="purple"/>
-</svg>
+</svg>-->
 
-<script type="text/javascript">
+<!-- This is the version of D3 I will be using because I know my code works with it. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.min.js"></script>
 
+<!-- I am using this Topojson library in order to work with the less-massive '.topojson' data type. -->
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+
+<!-- Our visualization data will be in this '.js' file -->
+<script src="main_viz.js"></script>
+
+<!--<script type="text/javascript">
+/*
     // may need this again: http://d3js.org/d3.v5.min.js
     //ogr2ogr -where "FID in ('PT','ES','AD','FR','CH','IT','AT','DE','HU','LI','BE','LU','SI','HR','SK','BA','CZ', 'DZ','MA','TN','LY')" countries.geojson data/CNTR_RG_10M_2016_4326.geojson
 
@@ -27,12 +48,12 @@
     });
 
     if(3<5){
-        d3.select("#p2").style("color", "blue");
+        d3.select("#p2").style("color", "red");
         //console.log("Testing...");
 
     }
+*/
 
-
-</script>
+</script>-->
 </body>
 </html>

@@ -20,7 +20,15 @@
     });*/
 
     function ready (error, data) {
-        //console.log(data)
-        //var countries = topojson.feature(data, data.objects.countries)
+        console.log(data)
+
+        var countries = topojson.feature(data, data.objects.countries).features
+
+        console.log(countries) // just to confirm that i'm pulling country data
+
+        svg.selectAll(".country")
+            .data(countries)
+            .enter().append("path")
+            .attr("class", "country")
     }
 })();
