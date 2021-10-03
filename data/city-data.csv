@@ -1,4 +1,4 @@
-population_in_millions,year_of_population,country,name,lat,long,countrycode,continent
+population_in_millions,year_of_population,country,city_name,lat,long,countrycode,continent
 2.4,,Brazil,Brasilia,-15.78333333,-47.916667,BR,South America
 6.7,,Colombia,Bogota,4.6,-74.083333,CO,South America
 7.8,,Egypt,Cairo,30.05,31.25,EG,Africa

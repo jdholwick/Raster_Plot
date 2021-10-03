@@ -22,14 +22,11 @@
 
     var map_path = d3.geoPath()
         .projection(projection)
-    // probably won't need the following function
-    /*d3.csv("data/raster-data.csv", function(data) {
-        console.log(data);
-    });*/
 
-    function ready (error, data, capitals) {
+    function ready (error, data, cities) {
         console.log(data)
 
+        var text_color = "#000000"
         var countries = topojson.feature(data, data.objects.countries).features
 
 
@@ -39,7 +36,7 @@
             .attr("class", "country")
             .attr("d", map_path) // grabs the 'map_path' variable i made and filled with 'geoPath' and then displays our map in the browser
             .on('mouseover', function(d) {
-                d3.select(this).attr("fill", "#000000") // was previously #D23513, a brighter red than the dark, to highlight a country
+                d3.select(this).attr("fill", "#B14F4A") // was previously #D23513, a brighter red than the dark, to highlight a country
             })
             .on('mouseout', function(d) {
                 d3.select(this).attr("fill", "#B07572")
@@ -49,7 +46,7 @@
             .attr("stroke-width", "0.9")
 
         svg.selectAll(".capital-marks")
-            .data(capitals)
+            .data(cities)
             .enter().append("circle")
             .attr("r", 4)
             .attr("fill", "white")
@@ -57,40 +54,52 @@
             // the lat and long must be converted to x and y coordinates (as was discussed in lecture -- turns out this is true)
             .attr("cx", function(d) {
                 // notice we must feed in both 'long' and 'lat' to get 'x' coord
-                var coords = projection([d.long, d.lat]) // 'long' and 'lat' are the columns from our 'capitals.csv' file
+                var coords = projection([d.long, d.lat]) // 'long' and 'lat' are the columns from our 'cities.csv' file
                 return coords[0]; // returns 'x' only
             })
             .attr("cy", function(d) {
-                var coords = projection([d.long, d.lat]) // 'long' and 'lat' are the columns from our 'capitals.csv' file
+                var coords = projection([d.long, d.lat]) // 'long' and 'lat' are the columns from our 'cities.csv' file
                 return coords[1]; // returns 'y' only
             })
 
-        svg.selectAll(".capital-name")
-            .data(capitals)
+        svg.selectAll(".city-name")
+            .data(cities)
             .enter().append("text")
-            .attr("class", "capital-name")
+            .attr("class", "city-name")
+
+            .on('mouseover', function() {
+                d3.select(this).attr("textLength", "250")
+                d3.select(this).attr("lengthAdjust", "spacingAndGlyphs")
+                d3.select(this).attr("fill", "#FFFFFF")
+                d3.select(this).attr("stroke", "#FFFFFF")
+            })
+            .on('mouseout', function() {
+                d3.select(this).attr("textLength", "0")
+                d3.select(this).attr("fill", text_color)
+                d3.select(this).attr("stroke", text_color)
+            })
 
             // the lat and long must be converted to x and y coordinates (as was discussed in lecture -- turns out this is true)
             .attr("x", function(d) {
                 // notice we must feed in both 'long' and 'lat' to get 'x' coord
-                var coords = projection([d.long, d.lat]) // 'long' and 'lat' are the columns from our 'capitals.csv' file
+                var coords = projection([d.long, d.lat]) // 'long' and 'lat' are the columns from our 'cities.csv' file
                 return coords[0]; // returns 'x' only
             })
             .attr("y", function(d) {
-                var coords = projection([d.long, d.lat]) // 'long' and 'lat' are the columns from our 'capitals.csv' file
+                var coords = projection([d.long, d.lat]) // 'long' and 'lat' are the columns from our 'cities.csv' file
                 return coords[1]; // returns 'y' only
             })
-            .attr("fill", "#000000")
-            .attr("stroke", "#000000")
+            .attr("fill", "#000000") // text color
+            .attr("stroke", "#000000") // text border color
             .attr("stroke-width", ".5")
 
             .text(function(d) {
-                return d.name
+                return d.city_name
             })
             .attr("dx", 10) // offset on 'x'
             .attr("dy", 3) // offset on 'y'
 
-        console.log(capitals) // just to confirm that i'm pulling a certain bit of data
+        console.log(cities) // just to confirm that i'm pulling a certain bit of data
 
     }
 })();
