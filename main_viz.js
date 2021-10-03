@@ -13,7 +13,8 @@
     d3.queue()
         //.defer(d3.json, "/data/world.topojson") // first item here so second in 'function ready()'
         .defer(d3.json, "/data/us.json")
-        .defer(d3.csv, "/data/city-data.csv") // second item here so third in 'function ready()'
+        //.defer(d3.csv, "/data/city-data.csv") // second item here so third in 'function ready()'
+        .defer(d3.csv, "/data/us-city-data.csv") // second item here so third in 'function ready()'
         .await(ready)
 
     // whenever there are shapes on a map we want to use 'geoMercator' (generally) and 'geoPath' apparently
@@ -55,11 +56,12 @@
             .attr("fill", "#B07572") // fill was previously #8F240D -- going lighter for now
             .attr("stroke", "#000000")
             .attr("stroke-width", "0.9")
-/*
-        svg.selectAll(".capital-marks")
+
+        //svg.selectAll(".capital-marks")
+            svg.selectAll(".city-marks")
             .data(cities)
             .enter().append("circle")
-            .attr("r", 4)
+            .attr("r", 3)
             .attr("fill", "white")
 
             // the lat and long must be converted to x and y coordinates (as was discussed in lecture -- turns out this is true)
@@ -111,6 +113,6 @@
             .attr("dy", 3) // offset on 'y'
 
         console.log(cities) // just to confirm that i'm pulling a certain bit of data
-*/
+
     }
 })();
