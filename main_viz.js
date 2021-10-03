@@ -1,7 +1,7 @@
 (function() {
     var margin = { top: 75, left: 75, right: 75, bottom: 75},
-        height = 800 - margin.top - margin.bottom,
-        width = 1200 - margin.left - margin.right;
+        height = 550 - margin.top - margin.bottom,
+        width = 750 - margin.left - margin.right;
 
     var svg = d3.select("#map")
         .append("svg")
@@ -11,15 +11,21 @@
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     d3.queue()
-        .defer(d3.json, "/data/world.topojson") // first item here so second in 'function ready()'
+        //.defer(d3.json, "/data/world.topojson") // first item here so second in 'function ready()'
+        .defer(d3.json, "/data/us.json")
         .defer(d3.csv, "/data/city-data.csv") // second item here so third in 'function ready()'
         .await(ready)
 
-    // whenever there are shapes on a map we want to use 'geoMercator' and 'geoPath' apparently
-    var projection = d3.geoMercator()
+    // whenever there are shapes on a map we want to use 'geoMercator' (generally) and 'geoPath' apparently
+    var projection = d3.geoAlbersUsa() // use ".geoAlbersUsa()' for US projections
         .translate([width/2, height/2])
-        .scale(195) // essentially creates the level of zoom on our map we'll see
+        .scale(900)//195) // essentially creates the level of zoom on our map we'll see
 
+    /*var projection = d3.geoMercator()
+        //.translate([width/2, height/2])
+        .translate([width*1.5, height*1.25])
+        .scale(300)//195) // essentially creates the level of zoom on our map we'll see
+*/
     var map_path = d3.geoPath()
         .projection(projection)
 
@@ -27,16 +33,21 @@
         console.log(data)
 
         var text_color = "#000000"
-        var countries = topojson.feature(data, data.objects.countries).features
+        //var countries = topojson.feature(data, data.objects.countries).features
+        var counties = topojson.feature(data, data.objects.counties).features
 
 
-        svg.selectAll(".country")
-            .data(countries)
+        //svg.selectAll(".country")
+        svg.selectAll(".county")
+            //.data(countries)
+            .data(counties)
             .enter().append("path")
-            .attr("class", "country")
+            //.attr("class", "country")
+            .attr("class", "county")
             .attr("d", map_path) // grabs the 'map_path' variable i made and filled with 'geoPath' and then displays our map in the browser
             .on('mouseover', function(d) {
-                d3.select(this).attr("fill", "#B14F4A") // was previously #D23513, a brighter red than the dark, to highlight a country
+                //d3.select(this).attr("fill", "#B14F4A") // was previously #D23513, a brighter red than the dark, to highlight a country
+                d3.select(this).attr("fill", "#F3FF00")
             })
             .on('mouseout', function(d) {
                 d3.select(this).attr("fill", "#B07572")
@@ -44,7 +55,7 @@
             .attr("fill", "#B07572") // fill was previously #8F240D -- going lighter for now
             .attr("stroke", "#000000")
             .attr("stroke-width", "0.9")
-
+/*
         svg.selectAll(".capital-marks")
             .data(cities)
             .enter().append("circle")
@@ -100,6 +111,6 @@
             .attr("dy", 3) // offset on 'y'
 
         console.log(cities) // just to confirm that i'm pulling a certain bit of data
-
+*/
     }
 })();
