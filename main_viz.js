@@ -11,8 +11,8 @@
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     d3.queue()
-        .defer(d3.json, "/data/us.json") // first item here so second in 'function ready()'
-        .defer(d3.csv, "/data/1955-2019_hail.csv") // second item here so third in 'function ready()'
+        .defer(d3.json, "data/us.json") // first item here so second in 'function ready()'
+        .defer(d3.csv, "data/abridged_1955-2019_hail.csv") // second item here so third in 'function ready()'
         .await(ready)
 
     // whenever there are shapes on a map we want to use 'geoMercator' (generally) and 'geoPath' apparently
@@ -36,11 +36,11 @@
             .attr("class", "county")
             .attr("d", map_path) // grabs the 'map_path' variable i made and filled with 'geoPath' and then displays our map in the browser
 
-            .on("mouseover", function(d) {
+            //.on("mouseover", function(d) {
                 //d3.select(this).enter().append("svg:title")
                     //.text("something") // this is not working
                 //d3.select(this).attr("fill", "#F3FF00")
-            })
+            //})
 
             .attr("fill", "#B07572") // fill was previously #8F240D -- going lighter for now
             .attr("stroke", "#FFFFFF")
