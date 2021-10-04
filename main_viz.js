@@ -35,6 +35,13 @@
             .enter().append("path")
             .attr("class", "county")
             .attr("d", map_path) // grabs the 'map_path' variable i made and filled with 'geoPath' and then displays our map in the browser
+
+            .on("mouseover", function(d) {
+                //d3.select(this).enter().append("svg:title")
+                    //.text("something") // this is not working
+                //d3.select(this).attr("fill", "#F3FF00")
+            })
+
             .attr("fill", "#B07572") // fill was previously #8F240D -- going lighter for now
             .attr("stroke", "#FFFFFF")
             .attr("stroke-width", "0.9")
@@ -51,7 +58,7 @@
             .on('mouseout', function(d) {
                 d3.select(this).attr("fill", "none")
             })*/
-            .attr("fill", "none") // fill was previously #8F240D -- going lighter for now
+            .attr("fill", "none") // no color so that there is no interference with my '.county' layer
             .attr("stroke", "#000000")
             .attr("stroke-width", "1.9")
 
@@ -59,7 +66,7 @@
             .data(hail)
             .enter().append("circle")
             .attr("r", 2)
-            .attr("fill", "#74FF00")
+            .attr("fill", "#00E1FF")
 
             // the lat and long must be converted to x and y coordinates (as was discussed in lecture -- turns out this is true)
             .attr("cx", function(d) {
@@ -71,6 +78,7 @@
                 var coords = projection([d.slon, d.slat]) // 'long' and 'lat' are the columns from our '1955-2019_hail.csv' file
                 return coords[1]; // returns 'y' only
             })
+            .attr("opacity", "0.55") // makes each dot slightly opaque
 
         /*svg.selectAll(".city-name")
             .data(cities)
