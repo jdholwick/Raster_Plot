@@ -20,10 +20,12 @@
 </head>
 <body>
 
-<p id="p1">Slowly Evolving into a D3 Rendering of Hail Storms Over ~70 Years:</p>
-
+<p id="p1">The trends over the last several decades have shown increased abnormal weather patterns. Hail storms are an example of this. There is more conclusive data pointing to the fact of climate change but small observations, such as these, make an over all point in the accumulation of scientific consensus on climate change being a reality. Years selected on the slider below will show  hail storm frequency in the given year over the last 70 years.</p>
+<p>----------------------------------------------------------</p>
+<p>NOTE: I wanted to make this an interactive map but I was not able to finish what I wanted to do, due to some challenges with D3. It ideally would show multiple years. This is just one year's hailstorm locations being displayed, 2019.</p>
 <div id="map"></div>
 
+<div id="hover_name"></div>
 <!-- This is the version of D3 I will be using because I know my code works with it. -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.min.js"></script>
 
@@ -33,5 +35,6 @@
 <!-- Our visualization data will be in this '.js' file -->
 <script src="main_viz.js"></script>
 
+<p>https://www.spc.noaa.gov/wcm/data/1955-2019_hail</a></p>
 </body>
 </html>

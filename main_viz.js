@@ -36,11 +36,21 @@
             .attr("class", "county")
             .attr("d", map_path) // grabs the 'map_path' variable i made and filled with 'geoPath' and then displays our map in the browser
 
-            //.on("mouseover", function(d) {
-                //d3.select(this).enter().append("svg:title")
-                    //.text("something") // this is not working
+            .on("mouseover", function(d) {
+                d3.select(this).enter().append("svg:title")
+                    .text("something") // this is not working
                 //d3.select(this).attr("fill", "#F3FF00")
-            //})
+            })
+            /*hover_name {
+            display: none
+            position: fixed
+            transform: translate(-50%, -2em)
+
+            mousemove mouseleave
+            let tooltip = d3.select(div)
+
+            tooltip.style("display", "block")
+             */
 
             .attr("fill", "#B07572") // fill was previously #8F240D -- going lighter for now
             .attr("stroke", "#FFFFFF")
